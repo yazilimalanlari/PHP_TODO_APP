@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routers>
+    <route path="/" method="GET" cmethod="HomeController::index" />
+
+    <routes prefix="/users" controller="UserController">
+        <route path="/" method="POST" cmethod="createUser" />
+        <route path="/" method="GET" cmethod="users" />
+    </routes>
+    
+    <!-- Todo -->
+    <routes prefix="/todo" controller="TodoController">
+        <route path="/" method="POST" cmethod="add" />
+    </routes>
+
+    <route path="/@:username" method="GET" cmethod="UserController::profile" />
+    <route path="/test/:number([0-9]+)" method="GET" cmethod="UserController::profile" />
+
+    <route path="/login" method="POST" cmethod="EntryController::login" />
+    <route path="/register" method="POST" cmethod="EntryController::register" />
+</routers>
