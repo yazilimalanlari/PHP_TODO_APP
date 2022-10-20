@@ -1,6 +1,6 @@
 <?php
 
-namespace Kernel;
+namespace Kernel\Config;
 
 class Cache {
     private static function create(): void {

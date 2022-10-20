@@ -6,5 +6,5 @@ use \Kernel\Config;
 
 Config::init(
     appApiType: Config::API_TYPE_DEFAULT,
-    useRoutersXML: true
+    useRoutersXML: false
 );

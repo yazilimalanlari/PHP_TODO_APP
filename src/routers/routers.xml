@@ -3,8 +3,8 @@
     <route path="/" method="GET" cmethod="HomeController::index" />
 
     <routes prefix="/users" controller="UserController">
-        <route path="/" method="POST" cmethod="createUser" />
         <route path="/" method="GET" cmethod="users" />
+        <route path="/" method="POST" cmethod="createUser" />
     </routes>
     
     <!-- Todo -->

@@ -3,7 +3,7 @@
 require __DIR__ . '/kernel/config/constants.php';
 require __DIR__ . '/kernel/config/preconfig.php';
 
-use Kernel\Cache;
+use Kernel\Config\Cache;
 use Kernel\Config;
 
 array_shift($argv);
