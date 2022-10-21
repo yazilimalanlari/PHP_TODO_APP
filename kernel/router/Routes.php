@@ -22,6 +22,13 @@ class Routes implements IRoutes {
     public static ?string $prefix = null;
 
     /**
+     * Is authentication
+     *
+     * @var boolean
+     */
+    public static bool $auth = false;
+
+    /**
      * Route controller wrapper
      * 
      * @param string $controllerName
@@ -34,5 +41,11 @@ class Routes implements IRoutes {
         if ($cb != null) $cb();
         self::$controllerName = null;
         self::$prefix = null;
+        self::$auth = false;
+    }
+
+    public static function auth(): Routes {
+        self::$auth = true;
+        return new static();
     }
 }

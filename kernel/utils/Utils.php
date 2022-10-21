@@ -17,12 +17,10 @@ class Utils {
     }
 
     public static function getDirectoryItemsCallback(string $path, callable $cb): void {
-        $dir = opendir($path);
-        while (($name = readdir($dir)) !== false && !in_array($name, ['.', '..'])) {
+        foreach (array_diff(scandir($path), ['.', '..']) as $name) {
             $fullPath = join('/', [$path, $name]);
             $cb($name, $fullPath, is_dir($fullPath) ? 'folder' : 'file');
         }
-        closedir($dir);
     }
 
     public static function callFileBufferContent(string $path, array $vars = []): string {

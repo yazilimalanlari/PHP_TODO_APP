@@ -11,10 +11,19 @@ class TodoModel extends Model {
             'type' => 'string',
             'required' => true
         ],
+        'owner' => [
+            'type' => 'int',
+            'required' => true
+        ],
+        'completed' => [
+            'type' => 'int'
+        ],
+        'updated' => [
+            'type' => 'date'
+        ],
         'created' => [
             'type' => 'date',
             'required' => true
-            // 'unique' => true
         ]
     ];
 }

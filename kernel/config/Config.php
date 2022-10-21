@@ -10,6 +10,7 @@ class Config {
     public static $staticFiles = [];
 
     public static function init(bool $useRoutersXML = false, string $appApiType = self::API_TYPE_DYNAMIC): void {
+        date_default_timezone_set('UTC');
         self::loadEnvironmentVariables(__CWD__ . '/.env');
         switch (getenv('MODE')) {
             case 'development': self::preload([ 'useRoutersXML' => $useRoutersXML ]); break;

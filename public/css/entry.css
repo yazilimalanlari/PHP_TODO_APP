@@ -1,0 +1,36 @@
+body > main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.entry {
+    width: 384px;
+    min-height: unset;
+}
+
+.entry form {
+    margin-top: 24px;
+}
+
+.entry form input {
+    background-color: hsl(0 0% 94%);
+}
+
+.entry form button {
+    --bg-hue: 196;
+    --bg-saturation: 92%;
+    --bg-lightness: 42%;
+    background-color: hsl(var(--bg-hue) var(--bg-saturation) var(--bg-lightness));
+    color: hsl(0 0% 92%);
+    transition: background-color 384ms var(--timing-function);
+}
+
+.entry form button:hover {
+    --bg-lightness: 38%;
+}
+
+.entry form button:active {
+    --bg-lightness: 32%;
+}

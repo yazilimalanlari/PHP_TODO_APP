@@ -25,9 +25,23 @@ function view(string $viewName, array $vars = [], string|bool $layout = false): 
 }
 
 function response(mixed $input): string {
-    http_response_code(200);
     switch (gettype($input)) {
-        case 'array': return json_encode($input);
+        case 'array': 
+            header('Content-Type: application/json');
+            http_response_code(array_key_exists('errors', $input) ? 406 : 200);
+            return json_encode($input);
         case 'string': return $input;
     }
+}
+
+function apiInfoForHTML() {
+    $apiBaseUrl = getenv('APP_URL');
+    $apiPath = '/api';
+
+    $js = <<<JS
+    const API_BASE_URL = "$apiBaseUrl";
+    const API_PATH = "$apiPath";
+    JS;
+
+    return "<script>$js</script>";
 }

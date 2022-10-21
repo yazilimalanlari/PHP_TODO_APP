@@ -113,6 +113,14 @@ class SQL {
 
         return $sql;
     }
+
+    protected function selectCountGenerateSQL(
+        string $tableName,
+        array $whereStatements, 
+        array $orderBy
+    ): string {
+        return $this->selectGenerateSQL($tableName, 'COUNT(*)', $whereStatements, $orderBy, 0, null);
+    }
     
     protected function updateGenerateSQL(string $tableName, array $data, array $whereStatements): string {
         $fields = join('=?, ', array_keys($data)) . '=?';

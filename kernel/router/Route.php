@@ -29,8 +29,10 @@ class Route implements IRoute {
         $route = [
             'path' => Router::routePathToRegexPattern((Routes::$prefix ?? '') . $path),
             'method' => $method,
-            'cmethod' => $methodName
+            'cmethod' => $methodName,
+            'auth' => Routes::$auth
         ];
+        
         Router::routeAdd($controllerName, $route);
     }
     

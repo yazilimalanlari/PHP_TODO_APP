@@ -1,15 +1,127 @@
+:root {
+    --radius-size: 12px;
+    --timing-function: cubic-bezier(.03, .37, .14, .68);
+    --color-red-hue: 0;
+    --color-green-hue: 132;
+    --color-blue-hue: 206;
+    --color-saturation: 92%;
+    --color-lightness: 42%;
+
+    --color-error: hsl(var(--color-red-hue) var(--color-saturation) var(--color-lightness));
+    --color-success: hsl(var(--color-green-hue) var(--color-saturation) var(--color-lightness));
+    --bg-color: 0 0% 84%;
+    --text-color: 0 0% 14%;
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
-    background-color: #f7f7f7;
+    margin: 0;
+    background-color: hsl(var(--bg-color));
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: hsl(var(--text-color));
 }
 
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     font-weight: normal;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+
+li {
+    list-style: none;
+}
+
+input, button {
+    outline: none;
+    border: none;
+    font-size: 1em;
+    padding: 16px;
+    border-radius: var(--radius-size);
+    font-family: inherit;
+}
+
+input {
+    transition: box-shadow 384ms var(--timing-function);
+}
+
+form:not([data-nocustom-validate]) input:invalid {
+    box-shadow: 0 0 0 2px var(--color-error);
+    color: var(--color-error);
+}
+
+form:not([data-nocustom-validate]) input ~ span.error {
+    display: none;
+}
+
+form:not([data-nocustom-validate]) input:invalid ~ span.error {
+    color: var(--color-error);
+    font-size: .84em;
+    display: block;
+}
+
+form:not([data-nocustom-validate]) input:valid {
+    box-shadow: 0 0 0 2px var(--color-success);
+    color: var(--color-success);
+}
+
+/* form:not([data-nocustom-validate]) input:valid ~ span.error {} */
+
+button {
+    cursor: pointer;
+    color: hsl(0 0% 92%);
+    transition: background-color 384ms var(--timing-function);
+}
+
+button.green {
+    background-color: var(--color-success);
+}
+
+button.green:hover {
+    background-color: hsl(var(--color-green-hue) var(--color-saturation) calc(var(--color-lightness) - 4%));
+}
+
+button.green:active {
+    background-color: hsl(var(--color-green-hue) var(--color-saturation) calc(var(--color-lightness) - 8%));
+}
+
+button.red {
+    background-color: var(--color-error);    
+}
+
+button.red:hover {
+    background-color: hsl(var(--color-red-hue) var(--color-saturation) calc(var(--color-lightness) - 4%));
+}
+
+button.red:active {
+    background-color: hsl(var(--color-red-hue) var(--color-saturation) calc(var(--color-lightness) - 8%));
+}
+
+button.blue {
+    background-color: hsl(var(--color-blue-hue) var(--color-saturation) var(--color-lightness));
+}
+
+button.blue:hover {
+    background-color: hsl(var(--color-blue-hue) var(--color-saturation) calc(var(--color-lightness) - 4%));
+}
+
+button.blue:active {
+    background-color: hsl(var(--color-blue-hue) var(--color-saturation) calc(var(--color-lightness) - 8%));
 }
 
 h1 {
@@ -39,4 +151,82 @@ h6 {
 .container {
     max-width: 768px;
     margin: 0 auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+form .field input {
+    width: 100%;
+}
+
+.primary-content {
+    background-color: hsl(0 0% 88%);
+    padding: 24px;
+    min-width: 512px;
+    min-height: 512px;
+    width: 100%;
+    border-radius: var(--radius-size);
+}
+
+.box-message {
+    padding: 24px;
+    border-radius: var(--radius-size);
+    color: hsl(0 0% 92%);
+}
+
+.box-message:empty {
+    display: none;
+}
+
+.box-message[data-type="success"] {
+    background-color: var(--color-success);
+}
+
+.box-message[data-type="error"] {
+    background-color: var(--color-error);
+}
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: hsl(0 0% 4% / 75%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-100vh);
+    transition: transform 192ms ease-in-out;
+}
+
+.modal.show {
+    transform: translateY(0);
+}
+
+.modal > .inner {
+    max-width: 384px;
+    width: 100%;
+    background-color: hsl(0 0% 94%);
+    border-radius: var(--radius-size);
+    padding: 24px;
+}
+
+.modal > .inner p {
+    margin-top: 8px;
+}
+
+.modal > .inner > .actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.modal > .inner > .actions button {
+    flex-grow: 1;
+    padding: 8px;
 }

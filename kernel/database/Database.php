@@ -75,17 +75,33 @@ class Database extends SQL {
         return boolval($result);
     }
 
-    protected function select(array|string $fields = [], bool $multiple = true): array|object {
+    protected function select(array|string $fields = [], bool $multiple = true): array|object|bool {
         $sql = parent::selectGenerateSQL($this->tableName, $fields, $this->whereStatements, $this->orderBy, $this->skip, $this->limit);
         $stmt = $this->db->prepare($sql);
         $stmt->execute($this->getWhereValues());
-        $this->release();
 
-        if ($multiple) return $stmt->fetchAll(PDO::FETCH_OBJ);
+        if ($multiple) {
+            $this->skip = 0;
+            $this->limit = null;
+            $this->release();
+            return [
+                'totalCount' => $this->count(),
+                'data' => $stmt->fetchAll(PDO::FETCH_OBJ)
+            ];
+        }
+        
+        $this->release();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
-    public function findOne(array|string $fields = []): object {
+    public function count(): int {
+        $sql = parent::selectCountGenerateSQL($this->tableName, $this->whereStatements, $this->orderBy);
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($this->getWhereValues());
+        return $stmt->fetchColumn();
+    }
+
+    public function findOne(array|string $fields = []): object|bool {
         return $this->select($fields, false);
     }
 

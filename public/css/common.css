@@ -1,0 +1,116 @@
+main > .container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.tasks > .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tasks > .header > button {
+    padding: 6px 8px;
+}
+
+.tasks ul {
+    margin-top: 24px;
+}
+
+.tasks ul li {
+    background-color: hsl(0 0% 92%);
+    padding: 12px;
+    border-radius: var(--radius-size);
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.tasks ul li > .task-content {
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 80px;
+}
+
+.tasks ul li:not(:first-child) {
+    margin-top: 8px;
+}
+
+.tasks ul li.completed {
+    text-decoration: line-through;
+    color: hsla(var(--text-color) / 36%);
+}
+
+.tasks ul li .actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    box-shadow: 1px 0 4px hsl(0 0% 0% / 50%);
+}
+
+.tasks ul li .actions > span {
+    cursor: pointer;
+    transition: width 192ms, filter 192ms, border 96ms var(--timing-function);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    filter: invert(.5);
+}
+
+.tasks ul li .actions > span.edit:hover {
+    border-right: 2px solid hsl(206 92% 42%);
+}
+
+.tasks ul li .actions > span.delete:hover {
+    border-left: 2px solid var(--color-error);
+}
+
+.tasks ul li .actions > span img {
+    width: 30px;
+    transform: scale(.6);
+    transition: transform 192ms var(--timing-function);
+}
+
+.tasks ul li .actions > span:hover {
+    width: 48px;
+    filter: invert(0);
+}
+
+.tasks ul li .actions > span:hover > img {
+    transform: scale(1);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+    gap: 4px;
+}
+
+.pagination a {
+    --color: hsl(var(--color-blue-hue) var(--color-saturation) var(--color-lightness));
+    border: 2px solid var(--color);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    user-select: none;
+    cursor: pointer;
+    transition: background-color 192ms, color 192ms var(--timing-function);
+    color: inherit;
+}
+
+.pagination a:hover, .pagination a.active {
+    background-color: var(--color);
+    color: hsl(0 0% 92%);
+}

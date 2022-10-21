@@ -5,6 +5,7 @@ namespace Kernel;
 use Error;
 use Exception;
 use \Kernel\Config\Cache;
+use Kernel\Web\Auth;
 use Kernel\Web\Request;
 
 class Router {
@@ -15,7 +16,8 @@ class Router {
     private static $MIME_TYPES = [
         'css' => 'text/css',
         'js' => 'text/javascript',
-        'ico' => 'image/vnd.microsoft.icon'
+        'ico' => 'image/vnd.microsoft.icon',
+        'svg' => 'image/svg+xml'
     ];
 
     public static function init(): void {
@@ -89,14 +91,21 @@ class Router {
                 preg_match($route['path'], $url, $result);
                 $params = array_filter($result, fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
                 if ($result) {
-                    self::matchedURL($cName, $route['cmethod'], $params);
+                    self::matchedURL($cName, $route['cmethod'], $params, $route['auth']);
                     return;
                 }
             }
         }
+
+        http_response_code(404);
     }
 
-    private static function matchedURL(string $controllerName, string $methodName, array $params): void {
+    private static function matchedURL(string $controllerName, string $methodName, array $params, bool $auth): void {
+        if ($auth && !(new Auth())->isAuth) {
+            http_response_code(401);
+            exit;
+        }
+
         $class = "\\Controller\\$controllerName";
         $controller = new $class;
 
@@ -129,6 +138,8 @@ class Router {
                 $result = '';
                 while ($data = fread($input, 1024)) $result .= $data;
                 fclose($input);
+
+                if (empty($result)) return [];
                 
                 $putData = [];
                 foreach (explode('&', $result) as $row) {
