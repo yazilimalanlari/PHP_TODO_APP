@@ -14,13 +14,16 @@ class Api {
          * @type {RequestInit}
          */
         const options = {
-            method
+            method,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
         }
 
         if (typeof data !== 'undefined') {
-            const formData = new FormData();
-            for (const name in data) formData.append(name, data[name]);
-            options.body = formData;
+            const dataFormat = new URLSearchParams();
+            for (const name in data) dataFormat.append(name, data[name]);
+            options.body = dataFormat;
         }
         
         const response = await fetch(url, options);

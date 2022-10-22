@@ -24,6 +24,10 @@ function view(string $viewName, array $vars = [], string|bool $layout = false): 
     return $content;
 }
 
+/**
+ * @param mixed $input
+ * @return string
+ */
 function response(mixed $input): string {
     switch (gettype($input)) {
         case 'array': 
@@ -34,7 +38,10 @@ function response(mixed $input): string {
     }
 }
 
-function apiInfoForHTML() {
+/**
+ * @return string
+ */
+function apiInfoForHTML(): string {
     $apiBaseUrl = getenv('APP_URL');
     $apiPath = '/api';
 
@@ -44,4 +51,13 @@ function apiInfoForHTML() {
     JS;
 
     return "<script>$js</script>";
+}
+
+/**
+ * @param string $path
+ * @return void
+ */
+function redirect(string $path): void {
+    header('Location: ' . getenv('APP_URL') . (str_starts_with($path, '/') ? '' : '/') . $path);
+    exit;
 }

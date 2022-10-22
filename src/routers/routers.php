@@ -13,6 +13,7 @@ Routes::controller('EntryController', '/api/entry', function() {
 
 Route::get('/register', 'EntryController::registerShow');
 Route::get('/login', 'EntryController::loginShow');
+Route::get('/logout', 'EntryController::logout');
 
 // Todo
 Routes::auth()::controller('TodoController', '/api/todo', function() {

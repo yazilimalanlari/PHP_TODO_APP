@@ -12,6 +12,7 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password" placeholder="Your password" required minlength="6" maxlength="255">
     </div>
+    <a href="/login">Already have an account? Sign in now.</a>
     <div class="box-message"></div>
     <button>Sign Up</button>
 </form>

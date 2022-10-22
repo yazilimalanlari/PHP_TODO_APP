@@ -21,4 +21,8 @@ class Auth {
     public function getUserId(): ?int {
         return $this->getUser()?->id ?? null;        
     }
+
+    public function removeUser(): void {
+        session_destroy();
+    }
 }

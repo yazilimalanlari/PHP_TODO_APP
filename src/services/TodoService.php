@@ -25,6 +25,7 @@ class TodoService {
             ->where('owner', $owner)
             ->skip($skip)
             ->limit($limit)
+            ->sort('id', -1)
             ->find();
         
         return [

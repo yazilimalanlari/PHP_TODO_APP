@@ -32,29 +32,29 @@ class Database extends SQL {
     }
 
     public function createConnection(bool $isSetup = false): void {
-        switch (getenv('DB_DRIVER')) {
-            case 'PDO':
-                try {
-                    switch (getenv('DB_SELECT')) {
-                        case 'MySQL':
-                            $this->db = new PDO('mysql:host=' . getenv('MYSQL_HOST') . ";dbname=$this->dbName;charset=utf8", getenv('DB_USER'), getenv('DB_PASS'));
-                            break;
-                        case 'SQLite3':
-                            $sqlitePath = join('/', [str_replace('$HOME', getenv('HOME'), getenv('SQLITE_PATH')), getenv('DB_NAME') . '.db']);
-                            $this->db = new PDO("sqlite:$sqlitePath");
-                            break;
-                        }
-                } catch (PDOException $e) {
-                    if ($e->getCode() === 1049 && $isSetup && getenv('DB_SELECT') === 'MySQL') {
-                        $this->db = new PDO('mysql:host=' . getenv('MYSQL_HOST'), getenv('DB_USER'), getenv('DB_PASS'));
-                        $this->db->exec("set names utf8; CREATE DATABASE $this->dbName; use $this->dbName");
-                    } else {
-                        die($e->getMessage());
-                    }
+        try {
+            switch (getenv('DB_SELECT')) {
+                case 'MySQL':
+                    $this->db = new PDO('mysql:host=' . getenv('MYSQL_HOST') . ";dbname=$this->dbName;charset=utf8", getenv('MYSQL_USER'), getenv('MYSQL_PASS'));
+                    break;
+                case 'SQLite3':
+                    $path = getenv('SQLITE_PATH');
+                    if (str_starts_with($path, '$HOME')) $path = str_replace('$HOME', getenv('HOME'), $path);
+                    else $path = realpath($path);
+
+                    if (!is_dir($path)) die("SQLite3 directory not found! path: $path");
+                    $path = $path . '/' . getenv('DB_NAME') . '.db';
+
+                    $this->db = new PDO("sqlite:$path");
+                    break;
                 }
-                break;
-            case 'SQLite3':
-                break;
+        } catch (PDOException $e) {
+            if ($e->getCode() === 1049 && $isSetup && getenv('DB_SELECT') === 'MySQL') {
+                $this->db = new PDO('mysql:host=' . getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASS'));
+                $this->db->exec("set names utf8; CREATE DATABASE $this->dbName; use $this->dbName");
+            } else {
+                throw $e;
+            }
         }
     }
 

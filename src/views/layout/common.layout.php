@@ -8,8 +8,18 @@
         <?=apiInfoForHTML()?>
     </head>
     <body>
+
+        <header>
+            <nav>
+                <a href="/logout">
+                    <?=file_get_contents(PUBLIC_PATH . '/images/icons/logout.svg')?>
+                </a>
+            </nav>
+        </header>
+        
         <?=$CONTENT ?? null?>
 
+        <script src="/js/utils.js"></script>
         <script type="module" src="/js/api.js"></script>
         <script type="module" src="/js/common.js"></script>
     </body>

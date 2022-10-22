@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <routers>
-    <route path="/" method="GET" cmethod="HomeController::index" />
+    <route path="/" method="GET" cmethod="TodoController::home" />
 
-    <routes prefix="/users" controller="UserController">
-        <route path="/" method="GET" cmethod="users" />
-        <route path="/" method="POST" cmethod="createUser" />
+    <routes prefix="/api/entry" controller="EntryController">
+        <route path="/register" method="POST" cmethod="register" />
+        <route path="/login" method="POST" cmethod="login" />
     </routes>
+
+    <route path="/register" method="GET" cmethod="EntryController::registerShow" />
+    <route path="/login" method="GET" cmethod="EntryController::loginShow" />
+    <route path="/logout" method="GET" cmethod="EntryController::logout" />
     
-    <!-- Todo -->
-    <routes prefix="/todo" controller="TodoController">
-        <route path="/" method="POST" cmethod="add" />
+    <routes prefix="/api/todo" controller="TodoController" auth="true">
+        <route path="/" method="POST" cmethod="create" />
+        <route path="/:id([0-9]+)" method="PUT" cmethod="update" />
+        <route path="/complete/:id([0-9]+)" method="PUT" cmethod="setComplete" />
+        <route path="/:id([0-9]+)" method="DELETE" cmethod="delete" />
     </routes>
-
-    <route path="/@:username" method="GET" cmethod="UserController::profile" />
-    <route path="/test/:number([0-9]+)" method="GET" cmethod="UserController::profile" />
-
-    <route path="/login" method="POST" cmethod="EntryController::login" />
-    <route path="/register" method="POST" cmethod="EntryController::register" />
 </routers>

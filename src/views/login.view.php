@@ -8,6 +8,7 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password" placeholder="Your password" required minlength="6" maxlength="255">
     </div>
+    <a href="/register">Don't have an account? Create a new account.</a>
     <div class="box-message"></div>
     <button>Sign In</button>
 </form>

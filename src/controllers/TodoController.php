@@ -26,10 +26,7 @@ class TodoController extends Validator {
     public function home(Request $req): string {
         $user = $req->auth->getUser();
 
-        if ($user == null) {
-            header('Location: /login');
-            exit;
-        }
+        if ($user == null) redirect('/login');
 
         $page = is_numeric($req->queryFilter('page')) ? $req->queryFilter('page') : 1;
         $skip = ($page - 1) * self::PER_PAGE;
@@ -39,7 +36,9 @@ class TodoController extends Validator {
 
         $vars = array(
             'totalPage' => ceil($result['totalCount'] / self::PER_PAGE),
-            'tasks' => $result['tasks']
+            'tasks' => $result['tasks'],
+            'totalCount' => $result['totalCount'],
+            'perPage' => self::PER_PAGE
         );
 
         return view('home', layout: true, vars: $vars);

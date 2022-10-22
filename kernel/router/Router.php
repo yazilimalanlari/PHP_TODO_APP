@@ -11,7 +11,7 @@ use Kernel\Web\Request;
 class Router {
     private static array $routes = [];
     private const ROUTERS_PATH = BASE_PATH . '/routers';
-    private const ROUTES_ATTRIBUTES = ['prefix', 'controller'];
+    private const ROUTES_ATTRIBUTES = ['prefix', 'controller', 'auth'];
     private const ROUTE_ATTRIBUTES = ['path', 'method', 'cmethod'];
     private static $MIME_TYPES = [
         'css' => 'text/css',
@@ -38,7 +38,7 @@ class Router {
         foreach ($xml->route as $item) {
             $attrs = Utils::getXMLAttributes($item->attributes(), self::ROUTE_ATTRIBUTES);
             [$controllerName, $methodName] = explode('::', $attrs['cmethod']);
-            $attrs['cmethod'] = $methodName;
+            $attrs = [...$attrs, 'cmethod' => $methodName, 'auth' => false];
             self::routeAdd($controllerName, self::routePathToRegexPattern($attrs));
         }
 
@@ -48,6 +48,7 @@ class Router {
             foreach ($item->route as $routeItem) {
                 $route = Utils::getXMLAttributes($routeItem->attributes(), self::ROUTE_ATTRIBUTES);
                 $route['path'] = self::routePathToRegexPattern(($prefix ?? '') . $route['path']);
+                $route['auth'] = isset($auth) && $auth === 'true';
                 self::routeAdd($controller, $route);
             }
         }

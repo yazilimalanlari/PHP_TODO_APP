@@ -1,9 +1,9 @@
 <main>
     <div class="container">
-        <div class="tasks primary-content">
+        <div class="tasks primary-content" data-total-count="<?=$totalCount?>" data-per-page="<?=$perPage?>">
             <div class="header">
                 <h1>My Tasks</h1>
-                <button class="blue">Add Task</button>
+                <button class="blue" id="add-task">Add Task</button>
             </div>
             <ul>
                 <?php foreach ($tasks as $task): ?>
@@ -20,6 +20,9 @@
                 </li>
                 <?php endforeach; ?>
             </ul>
+            
+            <div class="box-message" style="background-color: #4a4a4a" id="tasks-message"><?=$totalCount === 0 ? 'No saved tasks.' : ''?></div>
+            
             <div class="pagination">
                 <?php for($i = 1; $i <= $totalPage; $i++): ?>
                     <a href="/?page=<?=$i?>" <?=($_GET['page'] ?? 1) == $i ? ' class="active"' : ''?>><?=$i?></a>

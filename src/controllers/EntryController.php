@@ -46,7 +46,8 @@ class EntryController extends Validator {
         return response([ 'status' => $result ?? 'failed' ]);
     }
 
-    public function registerShow(): string {
+    public function registerShow(Request $req): string {
+        if ($req->auth->isAuth != null) redirect('/');
         return view('register', [ 'title' => 'Sign Up' ], 'entry');
     }
 
@@ -77,7 +78,13 @@ class EntryController extends Validator {
         return response([ 'status' => 'success' ]);
     }
 
-    public function loginShow(): string {
+    public function loginShow(Request $req): string {
+        if ($req->auth->isAuth != null) redirect('/');
         return view('login', [ 'title' => 'Sign In' ], 'entry');
+    }
+
+    public function logout(Request $req): void {
+        $req->auth->removeUser();
+        redirect('/login');
     }
 }

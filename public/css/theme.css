@@ -35,6 +35,12 @@ p {
 
 a {
     text-decoration: none;
+    color: inherit;
+    transition: opacity 96ms var(--timing-function);
+}
+
+a:hover {
+    opacity: .8;
 }
 
 ul {
@@ -86,6 +92,11 @@ button {
     cursor: pointer;
     color: hsl(0 0% 92%);
     transition: background-color 384ms var(--timing-function);
+}
+
+button[disabled] {
+    opacity: .5;
+    cursor: no-drop;
 }
 
 button.green {

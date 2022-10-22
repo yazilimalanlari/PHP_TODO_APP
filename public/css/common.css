@@ -1,7 +1,36 @@
+header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 96px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 24px;
+}
+
+header nav a svg {
+    width: 32px;
+    fill: var(--color-error);
+    transition: fill 192ms, transform 192ms var(--timing-function);
+    transform: scale(.8);
+}
+
+header nav a:hover > svg {
+    fill: hsl(var(--color-red-hue) var(--color-saturation) calc(var(--color-lightness) + 4%));
+    transform: scale(1.1);
+}
+
 main > .container {
     height: 100vh;
     display: flex;
     align-items: center;
+}
+
+.tasks {
+    display: flex;
+    flex-direction: column;
 }
 
 .tasks > .header {
@@ -15,7 +44,7 @@ main > .container {
 }
 
 .tasks ul {
-    margin-top: 24px;
+    margin: 24px 0;
 }
 
 .tasks ul li {
@@ -76,6 +105,7 @@ main > .container {
     width: 30px;
     transform: scale(.6);
     transition: transform 192ms var(--timing-function);
+    -webkit-user-drag: none;
 }
 
 .tasks ul li .actions > span:hover {
@@ -91,7 +121,7 @@ main > .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 24px;
+    margin-top: auto;
     gap: 4px;
 }
 

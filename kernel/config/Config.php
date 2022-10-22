@@ -5,13 +5,13 @@ namespace Kernel;
 use Kernel\Router;
 
 class Config {
-    const API_TYPE_DYNAMIC = 'DYNAMIC';
-    const API_TYPE_DEFAULT = 'DEFAULT';
     public static $staticFiles = [];
 
-    public static function init(bool $useRoutersXML = false, string $appApiType = self::API_TYPE_DYNAMIC): void {
+    public static function init(bool $useRoutersXML = false): void {
         date_default_timezone_set('UTC');
         self::loadEnvironmentVariables(__CWD__ . '/.env');
+        ini_set('session.gc_maxlifetime', 3600 * 24);
+
         switch (getenv('MODE')) {
             case 'development': self::preload([ 'useRoutersXML' => $useRoutersXML ]); break;
             case 'production': self::load(); break;
@@ -29,6 +29,8 @@ class Config {
     }
 
     public static function load(): void {
+        error_reporting(0);
+        ini_set('display_errors', 0);
         Router::init();
     }
 
@@ -49,6 +51,7 @@ class Config {
         $rows = array_filter(explode(PHP_EOL, $content));
         
         foreach ($rows as $row) {
+            if (str_starts_with(trim($row), '#')) continue;
             [$name, $value] = explode('=', $row, 2);
             $value = trim(current(explode('#', $value, 2)));
             putenv("$name=$value");
